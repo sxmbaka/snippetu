@@ -20,16 +20,28 @@ func snippetView(w http.ResponseWriter, r *http.Request) {
 }
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		w.Header().Set("Allowed", "POST")
+		w.WriteHeader(405)
+		w.Write([]byte("Method not allowed!"))
+		return
+	}
+
 	w.Write([]byte("Create new snippet"))
+}
+
+func googleIt(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "http://google.com", http.StatusFound)
 }
 
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
+	mux.HandleFunc("/google/", googleIt)
 	mux.HandleFunc("/snippet/view", snippetView)
 	mux.HandleFunc("/snippet/create", snippetCreate)
 
-	log.Print("Server starting at 4000")
+	log.Print("Server starting at http://localhost:4000/")
 	err := http.ListenAndServe("localhost:4000", mux)
 	log.Fatal(err)
 }
