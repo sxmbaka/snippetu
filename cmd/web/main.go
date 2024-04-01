@@ -17,7 +17,7 @@ func main() {
 	// additional information to include (local date and time). Note that the flags
 	// are joined using the bitwise OR operator |.
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	
+
 	// Create a logger for writing error messages in the same way, but use stderr as
 	// the destination and use the log.Lshortfile flag to include the relevant
 	// file name and line number.
